@@ -197,6 +197,11 @@ code, kbd, samp, pre { font-family: var(--mono); }
   overflow-x: auto;
   font-size: 0.855rem;
   line-height: 1.62;
+  /* This journal's code blocks are mostly log lines and command traces, which
+     are long and have no meaningful indentation. Wrapping them beats a
+     horizontal scrollbar on every block, especially on a phone. */
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
 }
 .prose pre > code { background: none; border: 0; padding: 0; font-size: inherit; color: inherit; }
 .highlight, .highlighter-rouge { background: none; }
