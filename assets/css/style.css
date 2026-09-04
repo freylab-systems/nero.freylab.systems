@@ -1,0 +1,317 @@
+/* ==========================================================================
+   nero.freylab.systems — ops journal
+   Vendored theme. Dark only, monospace throughout, no external dependencies.
+   The prompt colours mimic a real Debian shell: user@host green, path blue.
+   ========================================================================== */
+
+:root {
+  color-scheme: dark;
+
+  --bg:        #0a0c10;
+  --bg-soft:   #101419;
+  --bg-hover:  #161b22;
+  --line:      #1d232c;
+  --line-soft: #161b22;
+
+  --text:      #c5cedb;
+  --text-hi:   #e9eff7;
+  --dim:       #6b7784;
+  --dimmer:    #48525e;
+
+  --accent:    #3b82f6;
+  --accent-hi: #7fb0ff;
+  --ok:        #3fb950;
+  --err:       #ff7b72;
+
+  --mono: ui-monospace, SFMono-Regular, "SF Mono", "JetBrains Mono",
+          "IBM Plex Mono", Menlo, Consolas, "DejaVu Sans Mono",
+          "Liberation Mono", monospace;
+
+  --measure: 70ch;
+  --pad: 1.5rem;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(1100px 380px at 50% -170px, rgba(59, 130, 246, 0.08), transparent 70%),
+    var(--bg);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 15px;
+  line-height: 1.75;
+  font-variant-ligatures: none;
+}
+
+.wrap {
+  width: 100%;
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 0 var(--pad);
+}
+
+a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 0.22em;
+  text-decoration-thickness: 1px;
+  text-decoration-color: rgba(59, 130, 246, 0.42);
+}
+a:hover { color: var(--accent-hi); text-decoration-color: currentColor; }
+
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+::selection { background: rgba(59, 130, 246, 0.3); color: var(--text-hi); }
+
+.dim { color: var(--dim); }
+.ok { color: var(--ok); }
+.nowrap { white-space: nowrap; }
+.sep { color: var(--dimmer); margin: 0 0.45em; }
+
+.skip { position: absolute; left: -9999px; }
+.skip:focus {
+  position: fixed; left: 1rem; top: 1rem; z-index: 10;
+  background: var(--bg-soft); border: 1px solid var(--accent);
+  padding: 0.5rem 0.8rem; text-decoration: none;
+}
+
+/* --- header ------------------------------------------------------------- */
+
+.site-head {
+  border-bottom: 1px solid var(--line);
+  padding: 1.4rem 0 1.15rem;
+  margin-bottom: 2.75rem;
+}
+
+.prompt {
+  display: inline-block;
+  text-decoration: none;
+  font-size: 0.95rem;
+  letter-spacing: -0.01em;
+}
+.prompt:hover { text-decoration: none; }
+.p-user  { color: var(--ok); }
+.p-punct { color: var(--dim); }
+.p-path  { color: var(--accent); }
+.p-cmd   { color: var(--text-hi); }
+
+.cursor {
+  display: inline-block;
+  width: 0.58em;
+  height: 1.02em;
+  background: var(--accent);
+  vertical-align: -0.17em;
+  margin-left: 0.38em;
+  animation: blink 1.15s steps(1) infinite;
+}
+@keyframes blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .cursor { animation: none; opacity: 0.85; }
+}
+
+.site-nav {
+  margin-top: 0.6rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 1.2rem;
+  font-size: 0.86rem;
+}
+.site-nav a { color: var(--dim); text-decoration: none; }
+.site-nav a::before { content: "/"; color: var(--dimmer); margin-right: 0.1em; }
+.site-nav a:hover { color: var(--accent-hi); }
+
+/* --- prose -------------------------------------------------------------- */
+
+/* Vertical rhythm: zero the direct children, then space adjacent siblings.
+   Both selectors carry the same specificity, so the later rule wins where it
+   applies; heading rules below are one step more specific and override both. */
+.prose > * { margin: 0; }
+.prose > * + * { margin-top: 1.15rem; }
+
+.prose h2, .prose h3, .prose h4 {
+  color: var(--text-hi);
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  margin: 2.6rem 0 0;
+}
+.prose h2 { font-size: 1.16rem; }
+.prose h3 { font-size: 1.02rem; }
+.prose h4 { font-size: 0.95rem; }
+.prose h2::before { content: "## ";  color: var(--dimmer); font-weight: 400; }
+.prose h3::before { content: "### "; color: var(--dimmer); font-weight: 400; }
+.prose h2 + *, .prose h3 + *, .prose h4 + * { margin-top: 0.75rem; }
+
+.prose strong { color: var(--text-hi); font-weight: 600; }
+.prose em { color: var(--text-hi); font-style: italic; }
+
+.prose ul, .prose ol { padding-left: 0; list-style: none; }
+.prose li { position: relative; padding-left: 1.6em; margin-top: 0.4rem; }
+.prose li:first-child { margin-top: 0; }
+.prose ul > li::before { content: "-"; position: absolute; left: 0.3em; color: var(--dim); }
+.prose ol { counter-reset: ol; }
+.prose ol > li { counter-increment: ol; }
+.prose ol > li::before { content: counter(ol) "."; position: absolute; left: 0; color: var(--dim); }
+.prose li > ul, .prose li > ol { margin-top: 0.35rem; }
+
+.prose blockquote {
+  border-left: 2px solid var(--accent);
+  padding-left: 1rem;
+  color: var(--dim);
+}
+
+.prose hr { border: 0; border-top: 1px dashed var(--line); margin: 2.4rem 0; }
+
+.prose img { max-width: 100%; height: auto; border: 1px solid var(--line); border-radius: 4px; }
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  display: block;
+  overflow-x: auto;
+  font-size: 0.88rem;
+}
+.prose th, .prose td { border: 1px solid var(--line); padding: 0.4rem 0.7rem; text-align: left; }
+.prose th { color: var(--text-hi); background: var(--bg-soft); font-weight: 600; }
+
+code, kbd, samp, pre { font-family: var(--mono); }
+.prose :not(pre) > code {
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  padding: 0.08em 0.35em;
+  font-size: 0.9em;
+  color: var(--text-hi);
+}
+.prose pre {
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  padding: 0.95rem 1.05rem;
+  overflow-x: auto;
+  font-size: 0.855rem;
+  line-height: 1.62;
+}
+.prose pre > code { background: none; border: 0; padding: 0; font-size: inherit; color: inherit; }
+.highlight, .highlighter-rouge { background: none; }
+
+/* --- home listing ------------------------------------------------------- */
+
+.section-h {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-hi);
+  margin: 3.2rem 0 1rem;
+  letter-spacing: 0.02em;
+}
+.section-mark { color: var(--dimmer); font-weight: 400; }
+
+.entries { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line-soft); }
+.entry {
+  display: grid;
+  grid-template-columns: 7.2em 1fr;
+  gap: 0 1rem;
+  padding: 1.05rem 0;
+  border-bottom: 1px solid var(--line-soft);
+}
+.entry-date {
+  color: var(--dim);
+  font-size: 0.86rem;
+  padding-top: 0.14rem;
+  font-variant-numeric: tabular-nums;
+}
+.entry-title { color: var(--text-hi); font-weight: 600; text-decoration: none; }
+.entry-title:hover { color: var(--accent-hi); text-decoration: underline; text-underline-offset: 0.22em; }
+.entry-excerpt { color: var(--dim); font-size: 0.9rem; margin: 0.32rem 0 0; }
+
+/* --- post / page -------------------------------------------------------- */
+
+.eyebrow { color: var(--dim); font-size: 0.84rem; margin: 0 0 0.65rem; }
+.eyebrow a { color: var(--dim); text-decoration: none; }
+.eyebrow a:hover { color: var(--accent-hi); }
+
+.post-title, .page-title {
+  color: var(--text-hi);
+  font-size: 1.6rem;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+  margin: 0 0 0.55rem;
+}
+.page-title { margin-bottom: 2rem; }
+.post-meta { color: var(--dim); font-size: 0.84rem; margin: 0 0 2.2rem; }
+
+.eof { color: var(--dimmer); font-size: 0.8rem; margin: 2.9rem 0 0; }
+
+.post-nav {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
+}
+.pn {
+  display: block;
+  padding: 0.8rem 0.9rem;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: var(--bg-soft);
+  text-decoration: none;
+}
+.pn:hover { border-color: var(--accent); background: var(--bg-hover); }
+.pn-label { display: block; color: var(--dim); font-size: 0.78rem; }
+.pn-title { display: block; color: var(--text-hi); font-size: 0.9rem; margin-top: 0.15rem; }
+.pn.next { grid-column: 2; text-align: right; }
+
+/* --- 404 ---------------------------------------------------------------- */
+
+.notfound .nf-cmd { color: var(--text-hi); }
+.notfound .nf-err { color: var(--err); }
+.notfound .nf-path { color: var(--accent); word-break: break-all; }
+
+/* --- footer ------------------------------------------------------------- */
+
+.site-foot {
+  margin-top: 4.5rem;
+  border-top: 1px solid var(--line);
+  padding: 1.5rem 0 3rem;
+  font-size: 0.8rem;
+  color: var(--dim);
+}
+.foot-line { margin: 0 0 0.35rem; }
+.foot-line a { color: var(--dim); }
+.foot-line a:hover { color: var(--accent-hi); }
+
+/* --- narrow screens ----------------------------------------------------- */
+
+@media (max-width: 620px) {
+  :root { --pad: 1.15rem; }
+  body { font-size: 14.5px; }
+  .entry { grid-template-columns: 1fr; gap: 0.25rem; }
+  .post-nav { grid-template-columns: 1fr; }
+  .pn.next { grid-column: 1; text-align: left; }
+  .post-title, .page-title { font-size: 1.4rem; }
+}
+
+/* --- rouge syntax highlighting (dark) ----------------------------------- */
+
+.highlight .c, .highlight .c1, .highlight .cm, .highlight .cs, .highlight .cd { color: #5c6773; font-style: italic; }
+.highlight .k, .highlight .kc, .highlight .kd, .highlight .kn, .highlight .kp, .highlight .kr, .highlight .kt { color: #ff7b72; }
+.highlight .s, .highlight .s1, .highlight .s2, .highlight .sb, .highlight .sc, .highlight .sd, .highlight .se,
+.highlight .sh, .highlight .si, .highlight .sx, .highlight .sr, .highlight .ss { color: #a5d6ff; }
+.highlight .m, .highlight .mi, .highlight .mf, .highlight .mh, .highlight .mo, .highlight .il { color: #d2a8ff; }
+.highlight .nf, .highlight .nb, .highlight .bp { color: #d2a8ff; }
+.highlight .nc, .highlight .nt, .highlight .ne { color: #7ee787; }
+.highlight .na, .highlight .nv, .highlight .vi, .highlight .vg, .highlight .vc { color: #79c0ff; }
+.highlight .o, .highlight .ow, .highlight .p { color: #8b949e; }
+.highlight .gh, .highlight .gu { color: var(--accent); font-weight: 600; }
+.highlight .gd { color: #ffa198; background: rgba(248, 81, 73, 0.12); }
+.highlight .gi { color: #7ee787; background: rgba(63, 185, 80, 0.12); }
+.highlight .err { color: var(--err); }

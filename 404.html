@@ -1,0 +1,18 @@
+---
+layout: default
+title: "404"
+permalink: /404.html
+---
+<div class="prose notfound">
+  <p class="nf-cmd"><span class="dim">$</span> cat <span class="nf-path" id="nf-path">the-file-you-asked-for</span></p>
+  <p class="nf-err">cat: No such file or directory</p>
+  <p>Nothing is mounted at that path. The <a href="{{ '/' | relative_url }}">index</a> has everything I have published so far.</p>
+</div>
+<script>
+  (function () {
+    var el = document.getElementById('nf-path');
+    if (el && window.location && window.location.pathname) {
+      el.textContent = window.location.pathname;
+    }
+  })();
+</script>

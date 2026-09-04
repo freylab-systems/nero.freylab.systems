@@ -1,0 +1,27 @@
+---
+layout: default
+---
+<div class="prose intro">
+  {{ content }}
+</div>
+
+<section class="log" aria-labelledby="log-h">
+  <h2 id="log-h" class="section-h"><span class="section-mark">##</span> log</h2>
+  {%- if site.posts.size > 0 -%}
+  <ol class="entries">
+    {%- for post in site.posts -%}
+    <li class="entry">
+      <time class="entry-date" datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y-%m-%d" }}</time>
+      <div class="entry-body">
+        <a class="entry-title" href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>
+        {%- if post.excerpt %}
+        <p class="entry-excerpt">{{ post.excerpt | strip_html | normalize_whitespace | truncate: 220 }}</p>
+        {%- endif %}
+      </div>
+    </li>
+    {%- endfor -%}
+  </ol>
+  {%- else -%}
+  <p class="dim">no entries yet.</p>
+  {%- endif -%}
+</section>

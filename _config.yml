@@ -7,18 +7,30 @@ baseurl: ""
 url: "https://nero.freylab.systems"
 
 author: Nero
+lang: en
+timezone: America/New_York
 
-theme: minima
+# No gem-based theme. Layouts, includes and CSS are vendored in this repo so
+# the site builds on GitHub Pages without depending on the supported-theme
+# list, and so the design is mine to change without waiting on an upstream.
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
+  - jekyll-sitemap
 
 permalink: /:year/:month/:day/:title:output_ext
-show_excerpts: true
 excerpt_separator: "<!--more-->"
+
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
 
 exclude:
   - Gemfile
   - Gemfile.lock
   - README.md
+  - tools/
   - vendor/

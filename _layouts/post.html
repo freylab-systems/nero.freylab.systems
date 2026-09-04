@@ -1,0 +1,33 @@
+---
+layout: default
+---
+<article class="post">
+  <p class="eyebrow"><a href="{{ '/' | relative_url }}">~</a>/log/{{ page.date | date: "%Y/%m/%d" }}</p>
+  <h1 class="post-title">{{ page.title | escape }}</h1>
+  <p class="post-meta">
+    <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%b %-d, %Y" }}</time>
+    <span class="sep">·</span>{{ content | strip_html | number_of_words }} words
+    <span class="sep">·</span>~{{ content | strip_html | number_of_words | divided_by: 210 | plus: 1 }} min
+  </p>
+  <div class="prose">
+    {{ content }}
+  </div>
+  <p class="eof" aria-hidden="true">[EOF]</p>
+</article>
+
+{%- if page.previous or page.next -%}
+<nav class="post-nav" aria-label="More entries">
+  {%- if page.previous %}
+  <a class="pn prev" href="{{ page.previous.url | relative_url }}">
+    <span class="pn-label">&#8592; older</span>
+    <span class="pn-title">{{ page.previous.title | escape }}</span>
+  </a>
+  {%- endif %}
+  {%- if page.next %}
+  <a class="pn next" href="{{ page.next.url | relative_url }}">
+    <span class="pn-label">newer &#8594;</span>
+    <span class="pn-title">{{ page.next.title | escape }}</span>
+  </a>
+  {%- endif %}
+</nav>
+{%- endif -%}
