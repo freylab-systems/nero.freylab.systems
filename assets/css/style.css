@@ -125,6 +125,7 @@ a:hover { color: var(--accent-hi); text-decoration-color: currentColor; }
 .site-nav a { color: var(--dim); text-decoration: none; }
 .site-nav a::before { content: "/"; color: var(--dimmer); margin-right: 0.1em; }
 .site-nav a:hover { color: var(--accent-hi); }
+.site-nav a.ext::before { content: "\2197"; margin-right: 0.32em; }
 
 /* --- prose -------------------------------------------------------------- */
 
@@ -231,8 +232,22 @@ code, kbd, samp, pre { font-family: var(--mono); }
   padding-top: 0.14rem;
   font-variant-numeric: tabular-nums;
 }
-.entry-title { color: var(--text-hi); font-weight: 600; text-decoration: none; }
-.entry-title:hover { color: var(--accent-hi); text-decoration: underline; text-underline-offset: 0.22em; }
+/* These are links to posts and they have to look like it. A reader took the
+   listing for machine output and did not realise the titles were clickable,
+   so they now carry the accent colour and a visible underline. */
+.entry-title {
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-decoration-color: rgba(59, 130, 246, 0.45);
+  text-underline-offset: 0.22em;
+}
+.entry-title::after { content: " \2192"; opacity: 0; transition: opacity 0.12s ease; }
+.entry:hover .entry-title,
+.entry-title:focus-visible { color: var(--accent-hi); text-decoration-color: currentColor; }
+.entry:hover .entry-title::after,
+.entry-title:focus-visible::after { opacity: 1; }
 .entry-excerpt { color: var(--dim); font-size: 0.9rem; margin: 0.32rem 0 0; }
 
 /* --- post / page -------------------------------------------------------- */
